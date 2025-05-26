@@ -1,0 +1,898 @@
+```html
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 左側參數設定區 -->
+        <div class="lg:col-span-1 bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-blue-700">櫃體尺寸設定</h2>
+            
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">長度 (cm)</label>
+                    <input type="number" id="cabinet-length" value="120" min="30" max="300" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">深度 (cm)</label>
+                    <input type="number" id="cabinet-depth" value="50" min="30" max="100" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">高度 (cm)</label>
+                    <input type="number" id="cabinet-height" value="80" min="30" max="200" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-1">前檔高度 (cm)</label>
+                <input type="number" id="front-panel-height" value="10" min="0" max="30" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">櫃體顏色</label>
+                <div id="cabinet-colors" class="flex flex-wrap"></div>
+                <div id="cabinet-color-name" class="selected-color-name">目前選擇: 珍珠白</div>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">前檔顏色</label>
+                <div id="front-panel-colors" class="flex flex-wrap"></div>
+                <div id="front-panel-color-name" class="selected-color-name">目前選擇: 淺灰</div>
+            </div>
+            
+            <h2 class="text-xl font-bold mb-4 text-blue-700">櫃體元素設定</h2>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">選擇元素類型</label>
+                <select id="element-type" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="door">單門片</option>
+                    <option value="double-door">對開門片</option>
+                    <option value="drawer">抽屜</option>
+                    <option value="open">開放櫃</option>
+                </select>
+            </div>
+            
+            <div id="handle-style-container" class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-1">把手樣式</label>
+                <select id="handle-style" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="regular">一般把手</option>
+                    <option value="angled">斜把手</option>
+                </select>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">寬度 (cm)</label>
+                    <input type="number" id="element-width" value="40" min="10" max="200" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">高度 (cm)</label>
+                    <input type="number" id="element-height" value="40" min="10" max="200" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">X位置 (cm)</label>
+                    <input type="number" id="element-x" value="0" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Y位置 (cm)</label>
+                    <input type="number" id="element-y" value="0" min="0" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">元素顏色</label>
+                <div id="element-colors" class="flex flex-wrap"></div>
+                <div id="element-color-name" class="selected-color-name">目前選擇: 湛海藍</div>
+            </div>
+            
+            <button id="add-element" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-200 mb-6">
+                新增元素
+            </button>
+            
+            <div class="mb-6">
+                <h3 class="text-lg font-semibold mb-2 text-blue-700">已新增元素</h3>
+                <div id="elements-list" class="max-h-40 overflow-y-auto border border-gray-200 rounded-md p-2 bg-gray-50">
+                    <p class="text-gray-500 text-center py-2">尚未新增元素</p>
+                </div>
+            </div>
+            
+            <button id="export-image-btn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-md transition duration-200">
+                匯出圖片
+            </button>
+            <a id="download-link" download="浴櫃3D草稿圖.png"></a>
+        </div>
+        
+        <!-- 右側預覽區 -->
+        <div class="lg:col-span-2">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold mb-4 text-blue-700">浴櫃3D預覽</h2>
+                <div id="canvas-container">
+                    <div class="rotate-hint">拖動空白處旋轉3D視角</div>
+                    <div id="info-panel"></div>
+                </div>
+                <div class="mt-4 text-center text-sm text-gray-600">
+                    <p>提示：可拖曳旋轉3D模型查看不同角度</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // DOM元素
+        const cabinetLength = document.getElementById('cabinet-length');
+        const cabinetDepth = document.getElementById('cabinet-depth');
+        const cabinetHeight = document.getElementById('cabinet-height');
+        const frontPanelHeight = document.getElementById('front-panel-height');
+        const elementType = document.getElementById('element-type');
+        const handleStyle = document.getElementById('handle-style');
+        const handleStyleContainer = document.getElementById('handle-style-container');
+        const elementWidth = document.getElementById('element-width');
+        const elementHeight = document.getElementById('element-height');
+        const elementX = document.getElementById('element-x');
+        const elementY = document.getElementById('element-y');
+        const addElementBtn = document.getElementById('add-element');
+        const elementsList = document.getElementById('elements-list');
+        const exportImageBtn = document.getElementById('export-image-btn');
+        const downloadLink = document.getElementById('download-link');
+        const canvasContainer = document.getElementById('canvas-container');
+        const infoPanel = document.getElementById('info-panel');
+        const cabinetColorsContainer = document.getElementById('cabinet-colors');
+        const frontPanelColorsContainer = document.getElementById('front-panel-colors');
+        const elementColorsContainer = document.getElementById('element-colors');
+        const cabinetColorName = document.getElementById('cabinet-color-name');
+        const frontPanelColorName = document.getElementById('front-panel-color-name');
+        const elementColorName = document.getElementById('element-color-name');
+        
+        // 顯示/隱藏把手樣式選項
+        function updateHandleStyleVisibility() {
+            const type = elementType.value;
+            if (type === 'open') {
+                handleStyleContainer.style.display = 'none';
+            } else {
+                handleStyleContainer.style.display = 'block';
+            }
+        }
+        
+        elementType.addEventListener('change', updateHandleStyleVisibility);
+        updateHandleStyleVisibility();
+        
+        // 顏色選項 - 更新為指定的顏色
+        const colorOptions = [
+            { name: '銀色', value: '#C0C0C0' },
+            { name: '長板灰', value: '#808080' },
+            { name: '帝王黑', value: '#1A1A1A' },
+            { name: '湛海藍', value: '#1E90FF' },
+            { name: '藍綠砂', value: '#48D1CC' },
+            { name: '咖啡砂', value: '#8B4513' },
+            { name: '灰藍', value: '#6082B6' },
+            { name: '淺灰', value: '#D3D3D3' },
+            { name: '珍珠白', value: '#F5F5F5' },
+            { name: '淺黃', value: '#FFFFE0' },
+            { name: '奶茶', value: '#D2B48C' }
+        ];
+        
+        // 木紋選項
+        const woodOptions = [
+            { name: '胡桃橡木', value: '#654321', texture: 'linear-gradient(30deg, #654321 10%, #5D4037 90%)' },
+            { name: '冰島白橡', value: '#E8D8C0', texture: 'linear-gradient(30deg, #E8D8C0 10%, #D2B48C 90%)' },
+            { name: '原木黃橡', value: '#DAA520', texture: 'linear-gradient(30deg, #DAA520 10%, #B8860B 90%)' }
+        ];
+        
+        // 3D相關變數
+        let scene, camera, renderer, controls;
+        let cabinet, frontPanel, cabinetMesh;
+        let elements = [];
+        let elementCounter = 0;
+        let hasOpenCabinet = false; // 追蹤是否有開放櫃
+        
+        // 顏色選擇
+        let selectedCabinetColor = '#F5F5F5';
+        let selectedCabinetColorName = '珍珠白';
+        let selectedFrontPanelColor = '#D3D3D3';
+        let selectedFrontPanelColorName = '淺灰';
+        let selectedElementColor = '#1E90FF';
+        let selectedElementColorName = '湛海藍';
+        
+        // 初始化顏色選擇器
+        function initColorPickers() {
+            // 櫃體顏色
+            colorOptions.concat(woodOptions).forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.title = color.name;
+                
+                if (color.texture) {
+                    swatch.style.background = color.texture;
+                    swatch.classList.add('wood-texture');
+                } else {
+                    swatch.style.backgroundColor = color.value;
+                }
+                
+                swatch.addEventListener('click', () => {
+                    document.querySelectorAll('#cabinet-colors .color-swatch').forEach(s => s.classList.remove('selected'));
+                    swatch.classList.add('selected');
+                    selectedCabinetColor = color.value;
+                    selectedCabinetColorName = color.name;
+                    cabinetColorName.textContent = `目前選擇: ${color.name}`;
+                    updateCabinet();
+                });
+                
+                cabinetColorsContainer.appendChild(swatch);
+            });
+            
+            // 前檔顏色
+            colorOptions.concat(woodOptions).forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.title = color.name;
+                
+                if (color.texture) {
+                    swatch.style.background = color.texture;
+                    swatch.classList.add('wood-texture');
+                } else {
+                    swatch.style.backgroundColor = color.value;
+                }
+                
+                swatch.addEventListener('click', () => {
+                    document.querySelectorAll('#front-panel-colors .color-swatch').forEach(s => s.classList.remove('selected'));
+                    swatch.classList.add('selected');
+                    selectedFrontPanelColor = color.value;
+                    selectedFrontPanelColorName = color.name;
+                    frontPanelColorName.textContent = `目前選擇: ${color.name}`;
+                    updateCabinet();
+                });
+                
+                frontPanelColorsContainer.appendChild(swatch);
+            });
+            
+            // 元素顏色
+            colorOptions.concat(woodOptions).forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch';
+                swatch.title = color.name;
+                
+                if (color.texture) {
+                    swatch.style.background = color.texture;
+                    swatch.classList.add('wood-texture');
+                } else {
+                    swatch.style.backgroundColor = color.value;
+                }
+                
+                swatch.addEventListener('click', () => {
+                    document.querySelectorAll('#element-colors .color-swatch').forEach(s => s.classList.remove('selected'));
+                    swatch.classList.add('selected');
+                    selectedElementColor = color.value;
+                    selectedElementColorName = color.name;
+                    elementColorName.textContent = `目前選擇: ${color.name}`;
+                });
+                
+                elementColorsContainer.appendChild(swatch);
+            });
+            
+            // 設置默認選中
+            document.querySelector('#cabinet-colors .color-swatch:nth-child(9)').classList.add('selected'); // 珍珠白
+            document.querySelector('#front-panel-colors .color-swatch:nth-child(8)').classList.add('selected'); // 淺灰
+            document.querySelector('#element-colors .color-swatch:nth-child(4)').classList.add('selected'); // 湛海藍
+        }
+        
+        // 初始化3D場景
+        function initScene() {
+            // 創建場景
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf8fafc);
+            
+            // 創建相機
+            camera = new THREE.PerspectiveCamera(45, canvasContainer.clientWidth / canvasContainer.clientHeight, 0.1, 1000);
+            camera.position.set(200, 150, 200);
+            
+            // 創建渲染器
+            renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+            renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
+            renderer.shadowMap.enabled = true;
+            canvasContainer.appendChild(renderer.domElement);
+            
+            // 添加軌道控制
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            
+            // 添加光源
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(100, 100, 100);
+            directionalLight.castShadow = true;
+            scene.add(directionalLight);
+            
+            // 添加地板網格作為參考
+            const gridHelper = new THREE.GridHelper(300, 30, 0x888888, 0xcccccc);
+            scene.add(gridHelper);
+            
+            // 創建浴櫃
+            updateCabinet();
+            
+            // 動畫循環
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                updateInfoPanel();
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            // 處理窗口大小變化
+            window.addEventListener('resize', function() {
+                camera.aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
+            });
+        }
+        
+        // 更新資訊面板
+        function updateInfoPanel() {
+            const length = parseInt(cabinetLength.value);
+            const depth = parseInt(cabinetDepth.value);
+            const height = parseInt(cabinetHeight.value);
+            const frontPanelH = parseInt(frontPanelHeight.value);
+            
+            let infoText = `<b>櫃體資訊</b><br>`;
+            infoText += `尺寸: ${length}x${depth}x${height}cm<br>`;
+            infoText += `櫃體: ${selectedCabinetColorName}<br>`;
+            
+            if (frontPanelH > 0) {
+                infoText += `前檔: ${frontPanelH}cm (${selectedFrontPanelColorName})<br>`;
+            }
+            
+            if (elements.length > 0) {
+                infoText += `<br><b>元素清單</b><br>`;
+                elements.forEach((element, index) => {
+                    let typeName = '';
+                    switch(element.type) {
+                        case 'door': typeName = '單門片'; break;
+                        case 'double-door': typeName = '對開門片'; break;
+                        case 'drawer': typeName = '抽屜'; break;
+                        case 'open': typeName = '開放櫃'; break;
+                    }
+                    
+                    let handleInfo = '';
+                    if (element.type !== 'open') {
+                        handleInfo = element.handleStyle === 'regular' ? '一般把手' : '斜把手';
+                        handleInfo = ` (${handleInfo})`;
+                    }
+                    
+                    infoText += `${index+1}. ${typeName}${handleInfo}<br>`;
+                    infoText += `   尺寸: ${element.width}x${element.height}cm<br>`;
+                    infoText += `   顏色: ${element.colorName}<br>`;
+                });
+            }
+            
+            infoPanel.innerHTML = infoText;
+        }
+        
+        // 檢查是否有開放櫃
+        function checkForOpenCabinet() {
+            hasOpenCabinet = elements.some(element => element.type === 'open');
+            return hasOpenCabinet;
+        }
+        
+        // 清除場景中的所有物體
+        function clearScene() {
+            // 保留網格和光源
+            const objectsToKeep = [];
+            scene.children.forEach(child => {
+                if (child instanceof THREE.GridHelper || 
+                    child instanceof THREE.AmbientLight || 
+                    child instanceof THREE.DirectionalLight) {
+                    objectsToKeep.push(child);
+                }
+            });
+            
+            // 清空場景
+            while(scene.children.length > 0) { 
+                scene.remove(scene.children[0]); 
+            }
+            
+            // 重新添加要保留的物體
+            objectsToKeep.forEach(obj => {
+                scene.add(obj);
+            });
+        }
+        
+        // 更新櫃體
+        function updateCabinet() {
+            // 清除場景
+            clearScene();
+            
+            // 檢查是否有開放櫃
+            checkForOpenCabinet();
+            
+            // 獲取尺寸
+            const length = parseInt(cabinetLength.value);
+            const depth = parseInt(cabinetDepth.value);
+            const height = parseInt(cabinetHeight.value);
+            const frontPanelH = parseInt(frontPanelHeight.value);
+            
+            // 創建櫃體組
+            cabinet = new THREE.Group();
+            
+            // 創建櫃體主體
+            const cabinetGeometry = new THREE.BoxGeometry(length, height, depth);
+            const cabinetMaterial = new THREE.MeshPhongMaterial({ 
+                color: new THREE.Color(selectedCabinetColor),
+                transparent: true,
+                opacity: hasOpenCabinet ? 0.4 : 0.8, // 如果有開放櫃，櫃體更透明
+                side: THREE.DoubleSide
+            });
+            cabinetMesh = new THREE.Mesh(cabinetGeometry, cabinetMaterial);
+            cabinetMesh.position.set(0, height/2, 0);
+            cabinet.add(cabinetMesh);
+            
+            // 創建櫃體邊框
+            const edges = new THREE.EdgesGeometry(cabinetGeometry);
+            const lineMaterial = new THREE.LineBasicMaterial({ color: 0x333333 });
+            const cabinetLines = new THREE.LineSegments(edges, lineMaterial);
+            cabinetLines.position.set(0, height/2, 0);
+            cabinet.add(cabinetLines);
+            
+            // 創建前檔板 (從頂部往下延伸)
+            if (frontPanelH > 0) {
+                const frontPanelGeometry = new THREE.BoxGeometry(length, frontPanelH, 2);
+                const frontPanelMaterial = new THREE.MeshPhongMaterial({ 
+                    color: new THREE.Color(selectedFrontPanelColor)
+                });
+                frontPanel = new THREE.Mesh(frontPanelGeometry, frontPanelMaterial);
+                // 從頂部往下延伸，所以位置是 height - frontPanelH/2
+                frontPanel.position.set(0, height - frontPanelH/2, depth/2 + 1);
+                scene.add(frontPanel);
+                
+                const frontPanelEdges = new THREE.EdgesGeometry(frontPanelGeometry);
+                const frontPanelLines = new THREE.LineSegments(frontPanelEdges, lineMaterial);
+                frontPanelLines.position.copy(frontPanel.position);
+                scene.add(frontPanelLines);
+            }
+            
+            // 將櫃體置於場景中心
+            cabinet.position.set(0, 0, 0);
+            scene.add(cabinet);
+            
+            // 更新相機位置
+            const maxDimension = Math.max(length, depth, height);
+            camera.position.set(maxDimension * 1.5, maxDimension, maxDimension * 1.5);
+            controls.target.set(0, height/2, 0);
+            controls.update();
+            
+            // 更新已有元素
+            updateElements();
+            
+            // 更新資訊面板
+            updateInfoPanel();
+        }
+        
+        // 添加元素
+        function addElement() {
+            const type = elementType.value;
+            const width = parseInt(elementWidth.value);
+            const height = parseInt(elementHeight.value);
+            const x = parseInt(elementX.value);
+            const y = parseInt(elementY.value);
+            const handleStyleValue = handleStyle.value;
+            
+            const cabinetL = parseInt(cabinetLength.value);
+            const cabinetH = parseInt(cabinetHeight.value);
+            const cabinetD = parseInt(cabinetDepth.value);
+            
+            // 驗證尺寸
+            if (width <= 0 || height <= 0) {
+                alert('請輸入有效的尺寸');
+                return;
+            }
+            
+            if (x + width > cabinetL || y + height > cabinetH) {
+                alert('元素超出櫃體範圍');
+                return;
+            }
+            
+            elementCounter++;
+            
+            const element = {
+                id: elementCounter,
+                type: type,
+                width: width,
+                height: height,
+                x: x,
+                y: y,
+                color: selectedElementColor,
+                colorName: selectedElementColorName,
+                handleStyle: handleStyleValue
+            };
+            
+            elements.push(element);
+            
+            // 檢查是否有開放櫃，如果有，更新櫃體透明度
+            if (type === 'open' && !hasOpenCabinet) {
+                hasOpenCabinet = true;
+                if (cabinetMesh) {
+                    cabinetMesh.material.opacity = 0.4;
+                }
+            }
+            
+            renderElement(element);
+            updateElementsList();
+            updateInfoPanel();
+        }
+        
+        // 渲染元素
+        function renderElement(element) {
+            const cabinetL = parseInt(cabinetLength.value);
+            const cabinetH = parseInt(cabinetHeight.value);
+            const cabinetD = parseInt(cabinetDepth.value);
+            
+            // 計算元素位置
+            const posX = element.x - cabinetL/2 + element.width/2;
+            const posY = element.y + element.height/2;
+            const posZ = cabinetD/2 + 0.5; // 前面
+            
+            let elementMesh;
+            
+            switch(element.type) {
+                case 'door':
+                    // 創建門片
+                    const doorGroup = new THREE.Group();
+                    doorGroup.name = `element-${element.id}`;
+                    
+                    const doorGeometry = new THREE.BoxGeometry(element.width, element.height, 2);
+                    const doorMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(element.color) });
+                    const door = new THREE.Mesh(doorGeometry, doorMaterial);
+                    doorGroup.add(door);
+                    
+                    if (element.handleStyle === 'regular') {
+                        // 添加一般門把手
+                        const handleGeometry = new THREE.BoxGeometry(2, 15, 5);
+                        const handleMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const handle = new THREE.Mesh(handleGeometry, handleMaterial);
+                        handle.position.set(element.width/2 - 10, 0, 3.5);
+                        doorGroup.add(handle);
+                    } else if (element.handleStyle === 'angled') {
+                        // 添加斜把手 (上方空出2cm)
+                        const cutoutHeight = 2;
+                        const cutoutGeometry = new THREE.BoxGeometry(element.width, cutoutHeight, 5);
+                        const cutoutMaterial = new THREE.MeshPhongMaterial({ 
+                            color: 0x000000,
+                            transparent: true,
+                            opacity: 0.0
+                        });
+                        const cutout = new THREE.Mesh(cutoutGeometry, cutoutMaterial);
+                        cutout.position.set(0, element.height/2 - cutoutHeight/2, 3.5);
+                        doorGroup.add(cutout);
+                        
+                        // 添加斜把手邊緣
+                        const edgeGeometry = new THREE.BoxGeometry(element.width, 0.5, 3);
+                        const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
+                        edge.position.set(0, element.height/2 - cutoutHeight, 3);
+                        doorGroup.add(edge);
+                    }
+                    
+                    // 添加邊框
+                    const doorEdges = new THREE.EdgesGeometry(doorGeometry);
+                    const doorLines = new THREE.LineSegments(doorEdges, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    doorGroup.add(doorLines);
+                    
+                    doorGroup.position.set(posX, posY, posZ);
+                    scene.add(doorGroup);
+                    break;
+                    
+                case 'double-door':
+                    // 創建對開門片
+                    const doubleDoorGroup = new THREE.Group();
+                    doubleDoorGroup.name = `element-${element.id}`;
+                    
+                    // 左門
+                    const leftDoorGeometry = new THREE.BoxGeometry(element.width/2 - 1, element.height, 2);
+                    const leftDoorMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(element.color) });
+                    const leftDoor = new THREE.Mesh(leftDoorGeometry, leftDoorMaterial);
+                    leftDoor.position.set(-element.width/4 - 0.5, 0, 0);
+                    doubleDoorGroup.add(leftDoor);
+                    
+                    // 右門
+                    const rightDoorGeometry = new THREE.BoxGeometry(element.width/2 - 1, element.height, 2);
+                    const rightDoorMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(element.color) });
+                    const rightDoor = new THREE.Mesh(rightDoorGeometry, rightDoorMaterial);
+                    rightDoor.position.set(element.width/4 + 0.5, 0, 0);
+                    doubleDoorGroup.add(rightDoor);
+                    
+                    if (element.handleStyle === 'regular') {
+                        // 左門把手
+                        const leftHandleGeometry = new THREE.BoxGeometry(2, 15, 5);
+                        const leftHandleMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const leftHandle = new THREE.Mesh(leftHandleGeometry, leftHandleMaterial);
+                        leftHandle.position.set(-element.width/4 + 10, 0, 3.5);
+                        doubleDoorGroup.add(leftHandle);
+                        
+                        // 右門把手
+                        const rightHandleGeometry = new THREE.BoxGeometry(2, 15, 5);
+                        const rightHandleMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const rightHandle = new THREE.Mesh(rightHandleGeometry, rightHandleMaterial);
+                        rightHandle.position.set(element.width/4 - 10, 0, 3.5);
+                        doubleDoorGroup.add(rightHandle);
+                    } else if (element.handleStyle === 'angled') {
+                        // 左門斜把手
+                        const leftCutoutHeight = 2;
+                        const leftCutoutGeometry = new THREE.BoxGeometry(element.width/2 - 1, leftCutoutHeight, 5);
+                        const leftCutoutMaterial = new THREE.MeshPhongMaterial({ 
+                            color: 0x000000,
+                            transparent: true,
+                            opacity: 0.0
+                        });
+                        const leftCutout = new THREE.Mesh(leftCutoutGeometry, leftCutoutMaterial);
+                        leftCutout.position.set(-element.width/4 - 0.5, element.height/2 - leftCutoutHeight/2, 3.5);
+                        doubleDoorGroup.add(leftCutout);
+                        
+                        // 左門斜把手邊緣
+                        const leftEdgeGeometry = new THREE.BoxGeometry(element.width/2 - 1, 0.5, 3);
+                        const leftEdgeMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const leftEdge = new THREE.Mesh(leftEdgeGeometry, leftEdgeMaterial);
+                        leftEdge.position.set(-element.width/4 - 0.5, element.height/2 - leftCutoutHeight, 3);
+                        doubleDoorGroup.add(leftEdge);
+                        
+                        // 右門斜把手
+                        const rightCutoutHeight = 2;
+                        const rightCutoutGeometry = new THREE.BoxGeometry(element.width/2 - 1, rightCutoutHeight, 5);
+                        const rightCutoutMaterial = new THREE.MeshPhongMaterial({ 
+                            color: 0x000000,
+                            transparent: true,
+                            opacity: 0.0
+                        });
+                        const rightCutout = new THREE.Mesh(rightCutoutGeometry, rightCutoutMaterial);
+                        rightCutout.position.set(element.width/4 + 0.5, element.height/2 - rightCutoutHeight/2, 3.5);
+                        doubleDoorGroup.add(rightCutout);
+                        
+                        // 右門斜把手邊緣
+                        const rightEdgeGeometry = new THREE.BoxGeometry(element.width/2 - 1, 0.5, 3);
+                        const rightEdgeMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const rightEdge = new THREE.Mesh(rightEdgeGeometry, rightEdgeMaterial);
+                        rightEdge.position.set(element.width/4 + 0.5, element.height/2 - rightCutoutHeight, 3);
+                        doubleDoorGroup.add(rightEdge);
+                    }
+                    
+                    // 左門邊框
+                    const leftDoorEdges = new THREE.EdgesGeometry(leftDoorGeometry);
+                    const leftDoorLines = new THREE.LineSegments(leftDoorEdges, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    leftDoorLines.position.copy(leftDoor.position);
+                    doubleDoorGroup.add(leftDoorLines);
+                    
+                    // 右門邊框
+                    const rightDoorEdges = new THREE.EdgesGeometry(rightDoorGeometry);
+                    const rightDoorLines = new THREE.LineSegments(rightDoorEdges, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    rightDoorLines.position.copy(rightDoor.position);
+                    doubleDoorGroup.add(rightDoorLines);
+                    
+                    doubleDoorGroup.position.set(posX, posY, posZ);
+                    scene.add(doubleDoorGroup);
+                    break;
+                    
+                case 'drawer':
+                    // 創建抽屜
+                    const drawerGroup = new THREE.Group();
+                    drawerGroup.name = `element-${element.id}`;
+                    
+                    const drawerGeometry = new THREE.BoxGeometry(element.width, element.height, 2);
+                    const drawerMaterial = new THREE.MeshPhongMaterial({ color: new THREE.Color(element.color) });
+                    const drawer = new THREE.Mesh(drawerGeometry, drawerMaterial);
+                    drawerGroup.add(drawer);
+                    
+                    if (element.handleStyle === 'regular') {
+                        // 添加一般抽屜把手
+                        const drawerHandleGeometry = new THREE.BoxGeometry(30, 2, 5);
+                        const drawerHandleMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const drawerHandle = new THREE.Mesh(drawerHandleGeometry, drawerHandleMaterial);
+                        drawerHandle.position.set(0, 0, 3.5);
+                        drawerGroup.add(drawerHandle);
+                    } else if (element.handleStyle === 'angled') {
+                        // 添加斜把手 (上方空出2cm)
+                        const cutoutHeight = 2;
+                        const cutoutGeometry = new THREE.BoxGeometry(element.width, cutoutHeight, 5);
+                        const cutoutMaterial = new THREE.MeshPhongMaterial({ 
+                            color: 0x000000,
+                            transparent: true,
+                            opacity: 0.0
+                        });
+                        const cutout = new THREE.Mesh(cutoutGeometry, cutoutMaterial);
+                        cutout.position.set(0, element.height/2 - cutoutHeight/2, 3.5);
+                        drawerGroup.add(cutout);
+                        
+                        // 添加斜把手邊緣
+                        const edgeGeometry = new THREE.BoxGeometry(element.width, 0.5, 3);
+                        const edgeMaterial = new THREE.MeshPhongMaterial({ color: 0x555555 });
+                        const edge = new THREE.Mesh(edgeGeometry, edgeMaterial);
+                        edge.position.set(0, element.height/2 - cutoutHeight, 3);
+                        drawerGroup.add(edge);
+                    }
+                    
+                    // 添加邊框
+                    const drawerEdges = new THREE.EdgesGeometry(drawerGeometry);
+                    const drawerLines = new THREE.LineSegments(drawerEdges, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    drawerGroup.add(drawerLines);
+                    
+                    drawerGroup.position.set(posX, posY, posZ);
+                    scene.add(drawerGroup);
+                    break;
+                    
+                case 'open':
+                    // 創建開放櫃
+                    const openGroup = new THREE.Group();
+                    openGroup.name = `element-${element.id}`;
+                    
+                    // 創建開放櫃框架 (內縮2cm)
+                    const openWidth = element.width - 4; // 寬度內縮2cm x 2
+                    const openHeight = element.height - 4; // 高度內縮2cm x 2
+                    
+                    const openFrameGeometry = new THREE.BoxGeometry(openWidth, openHeight, cabinetD - 5);
+                    const openFrameMaterial = new THREE.MeshPhongMaterial({ 
+                        color: new THREE.Color(element.color),
+                        transparent: true,
+                        opacity: 0.6
+                    });
+                    const openFrame = new THREE.Mesh(openFrameGeometry, openFrameMaterial);
+                    openFrame.position.set(0, 0, -cabinetD/4);
+                    openGroup.add(openFrame);
+                    
+                    // 添加邊框
+                    const openEdges = new THREE.EdgesGeometry(openFrameGeometry);
+                    const openLines = new THREE.LineSegments(openEdges, new THREE.LineBasicMaterial({ color: 0x333333 }));
+                    openLines.position.copy(openFrame.position);
+                    openGroup.add(openLines);
+                    
+                    // 創建開放櫃前面的開口
+                    // 這裡我們需要在浴櫃本體上"挖洞"
+                    // 由於Three.js不直接支持CSG(Constructive Solid Geometry)，我們用一個透明的盒子來模擬開口
+                    const openingGeometry = new THREE.BoxGeometry(openWidth, openHeight, 10);
+                    const openingMaterial = new THREE.MeshPhongMaterial({
+                        color: 0x000000,
+                        transparent: true,
+                        opacity: 0.0
+                    });
+                    const opening = new THREE.Mesh(openingGeometry, openingMaterial);
+                    opening.position.set(0, 0, cabinetD/2);
+                    openGroup.add(opening);
+                    
+                    openGroup.position.set(posX, posY, posZ - cabinetD/4);
+                    scene.add(openGroup);
+                    break;
+            }
+        }
+        
+        // 更新元素
+        function updateElements() {
+            // 重新渲染所有元素
+            elements.forEach(element => {
+                renderElement(element);
+            });
+        }
+        
+        // 更新元素列表
+        function updateElementsList() {
+            if (elements.length === 0) {
+                elementsList.innerHTML = '<p class="text-gray-500 text-center py-2">尚未新增元素</p>';
+                return;
+            }
+            
+            elementsList.innerHTML = '';
+            elements.forEach((element, index) => {
+                const elementItem = document.createElement('div');
+                elementItem.className = 'flex justify-between items-center py-1 border-b border-gray-200';
+                
+                let typeName = '';
+                switch(element.type) {
+                    case 'door': typeName = '單門片'; break;
+                    case 'double-door': typeName = '對開門片'; break;
+                    case 'drawer': typeName = '抽屜'; break;
+                    case 'open': typeName = '開放櫃'; break;
+                }
+                
+                let handleName = '';
+                if (element.type !== 'open') {
+                    handleName = element.handleStyle === 'regular' ? '(一般把手)' : '(斜把手)';
+                }
+                
+                elementItem.innerHTML = `
+                    <div class="flex items-center">
+                        <span style="display:inline-block; width:12px; height:12px; background-color:${element.color}; margin-right:5px; border:1px solid #ccc;"></span>
+                        <span>${typeName} ${handleName} ${element.width}x${element.height}cm</span>
+                    </div>
+                    <button class="text-red-500 hover:text-red-700" data-index="${index}">刪除</button>
+                `;
+                
+                elementItem.querySelector('button').addEventListener('click', function() {
+                    removeElement(index);
+                });
+                
+                elementsList.appendChild(elementItem);
+            });
+        }
+        
+        // 刪除元素
+        function removeElement(index) {
+            const element = elements[index];
+            const elementObj = scene.getObjectByName(`element-${element.id}`);
+            if (elementObj) {
+                scene.remove(elementObj);
+            }
+            
+            elements.splice(index, 1);
+            updateElementsList();
+            
+            // 檢查是否還有開放櫃
+            const stillHasOpenCabinet = checkForOpenCabinet();
+            if (!stillHasOpenCabinet && hasOpenCabinet) {
+                // 如果沒有開放櫃了，恢復櫃體透明度
+                updateCabinet();
+            } else {
+                updateInfoPanel();
+            }
+        }
+        
+        // 匯出圖片
+        function exportImage() {
+            // 暫時隱藏提示文字和資訊面板
+            const hint = document.querySelector('.rotate-hint');
+            const infoPanel = document.getElementById('info-panel');
+            
+            if (hint) hint.style.display = 'none';
+            if (infoPanel) infoPanel.style.display = 'none';
+            
+            // 渲染一幀
+            renderer.render(scene, camera);
+            
+            try {
+                // 使用html2canvas截取整個canvas容器
+                html2canvas(canvasContainer, {
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: null,
+                    scale: 2 // 提高圖片質量
+                }).then(canvas => {
+                    // 創建下載
+                    const dataURL = canvas.toDataURL('image/png');
+                    downloadLink.href = dataURL;
+                    downloadLink.download = '浴櫃3D草稿圖.png';
+                    downloadLink.click();
+                    
+                    // 恢復提示文字和資訊面板
+                    if (hint) hint.style.display = 'block';
+                    if (infoPanel) infoPanel.style.display = 'block';
+                });
+            } catch (error) {
+                console.error('匯出圖片失敗:', error);
+                alert('匯出圖片失敗，請再試一次');
+                
+                // 恢復提示文字和資訊面板
+                if (hint) hint.style.display = 'block';
+                if (infoPanel) infoPanel.style.display = 'block';
+            }
+        }
+        
+        // 事件監聽
+        cabinetLength.addEventListener('input', updateCabinet);
+        cabinetDepth.addEventListener('input', updateCabinet);
+        cabinetHeight.addEventListener('input', updateCabinet);
+        frontPanelHeight.addEventListener('input', updateCabinet);
+        addElementBtn.addEventListener('click', addElement);
+        exportImageBtn.addEventListener('click', exportImage);
+        
+        // 初始化
+        initColorPickers();
+        initScene();
+        
+        // 處理窗口大小變化
+        window.addEventListener('resize', function() {
+            if (renderer) {
+                renderer.setSize(canvasContainer.clientWidth, canvasContainer.clientHeight);
+                camera.aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
+                camera.updateProjectionMatrix();
+            }
+        });
+    });
+</script>
